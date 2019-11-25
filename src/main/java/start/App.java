@@ -252,6 +252,8 @@ public class App {
         final XYChart.Series<Double, Double> seriesP = new XYChart.Series<>();
         int iter = 0 , iterP = 0;
         double point, yPrev = x0;
+        step = 0.1;
+
         for (point = A; point <= B; point += step) {
             setFixedParameter(point);
             series.getData().add(new XYChart.Data<Double,Double>(point,x0));
@@ -295,7 +297,7 @@ public class App {
             N = Integer.parseInt(textN.getText());
             P = Integer.parseInt(textP.getText());
         } catch (NumberFormatException e) {
-            showMessage("Ошибка в заполнении полей или пустые поля");
+            showMessage("Error while filling in fields or empty fields");
         }
         step = (B - A) / N;
         xAxis.setLowerBound(A);

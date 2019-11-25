@@ -19,7 +19,6 @@ public class Main extends Application {
         try {
             //FXMLLoader loader = new FXMLLoader(getClass().getResource("app.fxml"));
             Parent root = FXMLLoader.load(getClass().getResource("app.fxml"));
-            System.out.println("Hello");
             //loader.setController(new App());
             //Parent root = loader.load();
             primaryStage.setTitle("New App");
