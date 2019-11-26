@@ -1,0 +1,26 @@
+
+.chart-plot-background {
+    -fx-background-color: white;
+}
+
+.chart-symbol {
+    -fx-background-color:  #008000;
+    -fx-background-insets: 0;
+    -fx-background-radius: 5px;
+    -fx-padding: 1px;
+}
+
+.default-color1.chart-symbol {
+    -fx-background-color: #FF0000;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-shape: "M2,0 L5,4 L8,0 L10,0 L10,2 L6,5 L10,8 L10,10 L8,10 L5,6 L2,10 L0,10 L0,8 L4,5 L0,2 L0,0 Z";
+}
+
+.axis {
+    -fx-font-size: 1.5em;
+    -fx-tick-label-fill: #000033;
+    -fx-font-family: Tachona;
+    -sfx-tick-length: 20;
+    -fx-minor-tick-length: 10;
+}

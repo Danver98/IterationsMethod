@@ -22,7 +22,9 @@ public class Main extends Application {
             //loader.setController(new App());
             //Parent root = loader.load();
             primaryStage.setTitle("New App");
-            primaryStage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+            primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

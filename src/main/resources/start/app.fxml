@@ -36,8 +36,8 @@
                 <VBox fx:id="vBoxAlpha" prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelAlpha" text="Alpha" />
-                        <TextField fx:id="textAlpha" prefHeight="25.0" prefWidth="35.0" />
-                        <RadioButton fx:id="radioAlpha" mnemonicParsing="false" text="Alpha">
+                        <TextField fx:id="textAlpha" prefHeight="25.0" prefWidth="35.0" text="1" />
+                        <RadioButton fx:id="radioAlpha" mnemonicParsing="false" selected="true" text="Alpha">
                             <toggleGroup>
                                 <ToggleGroup fx:id="fixedParameter" />
                             </toggleGroup>
@@ -47,64 +47,64 @@
                 <VBox fx:id="vBoxAlpha1" prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelBeta" text="Beta" />
-                        <TextField fx:id="textBeta" prefHeight="25.0" prefWidth="35.0" />
+                        <TextField fx:id="textBeta" prefHeight="25.0" prefWidth="35.0" text="1" />
                         <RadioButton fx:id="radioBeta" mnemonicParsing="false" text="Beta" toggleGroup="$fixedParameter" />
                     </children>
                 </VBox>
                 <VBox fx:id="vBoxAlpha2" prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelMyu" text="Myu" />
-                        <TextField fx:id="textMyu" prefHeight="25.0" prefWidth="43.0" />
+                        <TextField fx:id="textMyu" prefHeight="25.0" prefWidth="43.0" text="1" />
                         <RadioButton fx:id="radioMyu" mnemonicParsing="false" text="Myu" toggleGroup="$fixedParameter" />
                     </children>
                 </VBox>
                 <VBox fx:id="vBoxAlpha3" prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelEpsilon" text="Epsilon" />
-                        <TextField fx:id="textEpsilon" prefHeight="25.0" prefWidth="43.0" />
+                        <TextField fx:id="textEpsilon" prefHeight="25.0" prefWidth="43.0" text="1" />
                         <RadioButton fx:id="radioEpsilon" mnemonicParsing="false" text="Epsilon" toggleGroup="$fixedParameter" />
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelA" text="A" />
-                        <TextField fx:id="textA" />
+                        <TextField fx:id="textA" text="-4" />
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelB" text="B" />
-                        <TextField fx:id="textB" />
+                        <TextField fx:id="textB" text="4" />
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelC" text="C" />
-                        <TextField fx:id="textC" />
+                        <TextField fx:id="textC" text="-4" />
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelD" text="D" />
-                        <TextField fx:id="textD" />
+                        <TextField fx:id="textD" text="4" />
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelX0" text="X0" />
-                        <TextField fx:id="textX0" />
+                        <TextField fx:id="textX0" text="1" />
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelM" text="M" />
-                        <TextField fx:id="textM" />
+                        <TextField fx:id="textM" text="100" />
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelN" text="N" />
-                        <TextField fx:id="textN" />
+                        <TextField fx:id="textN" text="200" />
                         <Label fx:id="chosenLabel" alignment="CENTER" prefHeight="45.0" prefWidth="97.0" text="Now chosen:" wrapText="true">
                             <VBox.margin>
                                 <Insets top="5.0" />
@@ -115,7 +115,7 @@
                 <VBox prefHeight="200.0" prefWidth="100.0">
                     <children>
                         <Label fx:id="labelP" text="P" />
-                        <TextField fx:id="textP" />
+                        <TextField fx:id="textP" text="10" />
                         <Button fx:id="buldButton" mnemonicParsing="false" onAction="#buildGraphics" prefHeight="36.0" prefWidth="96.0" text="Построить">
                             <VBox.margin>
                                 <Insets top="10.0" />

@@ -1,5 +1,7 @@
 package start;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.NumberAxis;
@@ -11,6 +13,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.function.Function;
 
 import java.util.function.Function;
@@ -23,6 +27,7 @@ public class App {
     public static String betaCode = "\u03B2"+":";
     public static String epsCode = "\u03B5"+":";
     public static String myuCode = "\u03BC"+":";
+    private String parameter;
     private double alpha;
     private double beta;
     private double myu;
@@ -153,7 +158,8 @@ public class App {
     @FXML
     private Label chosenLabel;
 
-    public void initialize() {
+    @FXML
+    private void initialize() {
         labelAlpha.setText(alphaCode);
         labelBeta.setText(betaCode);
         labelEpsilon.setText(epsCode);
@@ -229,7 +235,7 @@ public class App {
 
 
     private void setFixedParameter(double currentPoint) {
-        switch (((RadioButton) fixedParameter.getSelectedToggle()).getText()) {
+        switch (parameter) {
             case "Alpha":
                 function = x -> currentPoint * Math.sin(beta * x) * Math.cos(epsilon / Math.pow(x - myu, 2));
                 break;
@@ -247,42 +253,50 @@ public class App {
         }
     }
 
+    private double apply(double x,double currentPoint){
+        if((Math.abs(x - myu) < EPSILON) || ((parameter == "Myu") && (Math.abs(x - currentPoint) < EPSILON))){
+            x+=EPSILON;
+        }
+        return function.apply(x);
+    }
+
     private void calcPoints(){
         final XYChart.Series<Double, Double> series = new XYChart.Series<>();
         final XYChart.Series<Double, Double> seriesP = new XYChart.Series<>();
         int iter = 0 , iterP = 0;
         double point, yPrev = x0;
-        step = 0.1;
-
-        for (point = A; point <= B; point += step) {
+        step = (B - A) /500;
+        for(point = A; point < B + step;point+=step,iter = 0,iterP = 0,yPrev = x0){
             setFixedParameter(point);
-            series.getData().add(new XYChart.Data<Double,Double>(point,x0));
-            // фиксированный параметр
             while(iter < M){
-                yPrev = function.apply(yPrev);
+                yPrev = apply(yPrev,point);
+
                 iter++;
             }
             iter = 0;
             while(iter < N){
-                yPrev = function.apply(yPrev);
-                series.getData().add(new XYChart.Data<Double,Double>(point,yPrev));
-                if(iterP == P - 1){
+                yPrev = apply(yPrev,point);
+                if(iterP != P-1){
+                    series.getData().add(new XYChart.Data<Double,Double>(point,yPrev));
+                    iterP++;
+                }
+                else{
                     seriesP.getData().add(new XYChart.Data<Double,Double>(point,yPrev));
                     iterP=0;
                 }
-                else{
-                    iterP++;
-                }
                 iter++;
             }
-            yPrev = x0;
-            iter = 0;
+
         }
+        System.out.println("Finished");
         scatterChart.getData().addAll(series,seriesP);
     }
 
     @FXML
     public void buildGraphics(ActionEvent event) {
+        //scatterChart.getData().clear();
+        ObservableList<XYChart.Series<Double, Double>> data = FXCollections.observableArrayList();
+        scatterChart.setData(data);
         try {
             alpha = Double.parseDouble(textAlpha.getText());
             beta = Double.parseDouble(textBeta.getText());
@@ -299,13 +313,19 @@ public class App {
         } catch (NumberFormatException e) {
             showMessage("Error while filling in fields or empty fields");
         }
-        step = (B - A) / N;
         xAxis.setLowerBound(A);
         xAxis.setUpperBound(B);
         xAxis.setTickUnit(step);
         yAxis.setLowerBound(C);
         yAxis.setUpperBound(D);
+        parameter = ((RadioButton) fixedParameter.getSelectedToggle()).getText();
         calcPoints();
+        /*int number = 1000000;
+        final XYChart.Series<Double, Double> series = new XYChart.Series<>();
+        for(int i=0;i<number;i++){
+            series.getData().add(new XYChart.Data<Double,Double>(0.,0.));
+        }
+        System.out.println("End");*/
     }
 
 
