@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import measurement.MeasureTime;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -261,8 +262,8 @@ public class App {
     }
 
     private void calcPoints(){
-        final XYChart.Series<Double, Double> series = new XYChart.Series<>();
-        final XYChart.Series<Double, Double> seriesP = new XYChart.Series<>();
+        ObservableList<XYChart.Data> data = FXCollections.observableArrayList();
+        ObservableList<XYChart.Data> dataP = FXCollections.observableArrayList();
         int iter = 0 , iterP = 0;
         double point, yPrev = x0;
         step = (B - A) /500;
@@ -277,18 +278,20 @@ public class App {
             while(iter < N){
                 yPrev = apply(yPrev,point);
                 if(iterP != P-1){
-                    series.getData().add(new XYChart.Data<Double,Double>(point,yPrev));
+                    data.add(new XYChart.Data<Double,Double>(point,yPrev));
                     iterP++;
                 }
                 else{
-                    seriesP.getData().add(new XYChart.Data<Double,Double>(point,yPrev));
+                    dataP.add(new XYChart.Data<Double,Double>(point,yPrev));
                     iterP=0;
                 }
                 iter++;
             }
-
         }
-        System.out.println("Finished");
+        XYChart.Series series = new XYChart.Series();
+        XYChart.Series seriesP = new XYChart.Series();
+        series.setData(data);
+        seriesP.setData(dataP);
         scatterChart.getData().addAll(series,seriesP);
     }
 
@@ -319,13 +322,9 @@ public class App {
         yAxis.setLowerBound(C);
         yAxis.setUpperBound(D);
         parameter = ((RadioButton) fixedParameter.getSelectedToggle()).getText();
-        calcPoints();
-        /*int number = 1000000;
-        final XYChart.Series<Double, Double> series = new XYChart.Series<>();
-        for(int i=0;i<number;i++){
-            series.getData().add(new XYChart.Data<Double,Double>(0.,0.));
-        }
-        System.out.println("End");*/
+        //calcPoints();
+        MeasureTime measure = new MeasureTime();
+        System.out.println("Calc2: " + (measure.measureMethodTime(this,"calcPoints")));
     }
 
 
