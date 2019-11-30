@@ -1,7 +1,10 @@
 package start;
 
+import calculation.Calculation;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.NumberAxis;
@@ -15,12 +18,15 @@ import javafx.scene.layout.VBox;
 import measurement.MeasureTime;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveTask;
 import java.util.function.Function;
 
 import java.util.function.Function;
 
-public class App {
+public class App  {
     private Function<Double,Double> function;
     private double step = 0.01;
     public static double EPSILON = 0.0000001;
@@ -174,6 +180,18 @@ public class App {
         );
     }
 
+    public NumberAxis getxAxis() {
+        return xAxis;
+    }
+
+    public NumberAxis getyAxis() {
+        return yAxis;
+    }
+
+    public ScatterChart<Double, Double> getScatterChart() {
+        return scatterChart;
+    }
+
     public Function<Double, Double> getFunction() {
         return function;
     }
@@ -234,8 +252,7 @@ public class App {
         return fixedParameter;
     }
 
-
-    private void setFixedParameter(double currentPoint) {
+    public void setFixedParameter(double currentPoint) {
         switch (parameter) {
             case "Alpha":
                 function = x -> currentPoint * Math.sin(beta * x) * Math.cos(epsilon / Math.pow(x - myu, 2));
@@ -254,14 +271,14 @@ public class App {
         }
     }
 
-    private double apply(double x,double currentPoint){
+    public double apply(double x,double currentPoint){
         if((Math.abs(x - myu) < EPSILON) || ((parameter == "Myu") && (Math.abs(x - currentPoint) < EPSILON))){
             x+=EPSILON;
         }
         return function.apply(x);
     }
 
-    private void calcPoints(){
+    private  void calcPoints(){
         ObservableList<XYChart.Data> data = FXCollections.observableArrayList();
         ObservableList<XYChart.Data> dataP = FXCollections.observableArrayList();
         int iter = 0 , iterP = 0;
@@ -293,6 +310,7 @@ public class App {
         series.setData(data);
         seriesP.setData(dataP);
         scatterChart.getData().addAll(series,seriesP);
+        System.out.println("Das Auto");
     }
 
     @FXML
@@ -323,11 +341,12 @@ public class App {
         yAxis.setUpperBound(D);
         parameter = ((RadioButton) fixedParameter.getSelectedToggle()).getText();
         //calcPoints();
-        MeasureTime measure = new MeasureTime();
-        System.out.println("Calc2: " + (measure.measureMethodTime(this,"calcPoints")));
+        Calculation calc = new Calculation(this, A, B);
+        ForkJoinPool fjp = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
+        scatterChart = fjp.invoke(calc);
+        //MeasureTime measure = new MeasureTime();
+        //System.out.println("Calc2: " + (measure.measureMethodTime(this,"calcPoints")));
     }
-
-
 
     private void showMessage(String s) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
